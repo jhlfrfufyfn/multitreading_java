@@ -5,19 +5,19 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        try(Scanner cin = new Scanner(System.in)) {
+        try (Scanner cin = new Scanner(System.in)) {
             System.out.println("Enter the number of elements in array: ");
             int n = Integer.parseInt(cin.nextLine());
 
             Integer[] array = new Integer[n];
 
             Random generator = new Random();
-            for(int i=0;i<n;i++){
+            for (int i = 0; i < n; i++) {
                 array[i] = generator.nextInt(1000);
             }
 
             System.out.println("Size: " + n);
-            for(int i=0;i<n;i++){
+            for (int i = 0; i < n; i++) {
                 System.out.print(array[i] + " ");
             }
             System.out.print(System.lineSeparator());
@@ -29,18 +29,18 @@ public class Main {
 
             int orderType = Integer.parseInt(cin.nextLine());
             Comparator<Integer> comparator;
-            switch (orderType){
+            switch (orderType) {
                 case 1:
-                    comparator = new SortByAscendingOrder();
+                    comparator = (n1, n2) -> n1 - n2;
                     break;
                 case 2:
-                    comparator = new SortByDescendingOrder();
+                    comparator = (n1, n2) -> n2 - n1;
                     break;
                 case 3:
-                    comparator = new SortByAscendingDigits();
+                    comparator = (n1, n2) -> getNumberOfDigits(n1) - getNumberOfDigits(n2);
                     break;
                 case 4:
-                    comparator = new SortByDescendingDigits();
+                    comparator = (n1, n2) -> getNumberOfDigits(n2) - getNumberOfDigits(n1);
                     break;
                 default:
                     throw new InputMismatchException("ERROR: wrong order type");
@@ -54,11 +54,11 @@ public class Main {
             List<Integer> ls = runnable.getArray();
 
             System.out.println("Sorted array: ");
-            for(int i=0;i<n;i++){
+            for (int i = 0; i < n; i++) {
                 System.out.print(ls.get(i) + " ");
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.toString());
         }
     }
@@ -66,53 +66,24 @@ public class Main {
     static int getNumberOfDigits(Integer number) {
         int t = number;
         int answer = 0;
-        while(t != 0){
-            t/=10;
+        while (t != 0) {
+            t /= 10;
             answer++;
         }
         return answer;
     }
 }
 
-class SortByAscendingOrder implements Comparator<Integer> {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return o1 - o2;
-    }
-}
-
-class SortByDescendingOrder implements Comparator<Integer> {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return o2 - o1;
-    }
-}
-
-class SortByAscendingDigits implements Comparator<Integer> {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return Main.getNumberOfDigits(o1) - Main.getNumberOfDigits(o2);
-    }
-}
-
-class SortByDescendingDigits implements Comparator<Integer> {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return Main.getNumberOfDigits(o2) - Main.getNumberOfDigits(o1);
-    }
-}
-
-
-class SortingThread implements Runnable{
+class SortingThread implements Runnable {
     private List<Integer> array;
     private Comparator<Integer> comparator;
-    boolean isSorted = false;
+    private boolean isSorted = false;
 
-    public List<Integer> getArray() {
+    List<Integer> getArray() {
         return array;
     }
 
-    SortingThread(List<Integer> array, Comparator<Integer> comparator){
+    SortingThread(List<Integer> array, Comparator<Integer> comparator) {
         this.array = array;
         this.comparator = comparator;
         this.isSorted = true;
@@ -122,7 +93,7 @@ class SortingThread implements Runnable{
     public void run() {
         try {
             array.sort(comparator);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.toString());
         }
     }

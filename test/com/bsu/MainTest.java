@@ -12,7 +12,7 @@ class MainTest {
     @Test
     void TestSortingAscending() throws InterruptedException {
         List<Integer> list = Arrays.asList(10, 100, 23, 1, 2, 3, 2, 1, 2, 3, 1);
-        SortingThread sThread = new SortingThread(list, new SortByAscendingOrder());
+        SortingThread sThread = new SortingThread(list, (n1,n2)->n1-n2);
         Thread newThread = new Thread(sThread);
         newThread.start();
         newThread.join();
@@ -22,7 +22,7 @@ class MainTest {
     @Test
     void TestSortingDescending() throws InterruptedException {
         List<Integer> list = Arrays.asList(10, 100, 23, 1, 2, 3, 2, 1, 2, 3, 1);
-        SortingThread sThread = new SortingThread(list, new SortByDescendingOrder());
+        SortingThread sThread = new SortingThread(list, (n1,n2)->n2-n1);
         Thread newThread = new Thread(sThread);
         newThread.start();
         newThread.join();
@@ -32,7 +32,7 @@ class MainTest {
     @Test
     void TestSortingAscendingDigits() throws InterruptedException {
         List<Integer> list = Arrays.asList(10, 100, 2300, 2);
-        SortingThread sThread = new SortingThread(list, new SortByAscendingDigits());
+        SortingThread sThread = new SortingThread(list, (n1,n2)->Main.getNumberOfDigits(n1)-Main.getNumberOfDigits(n2));
         Thread newThread = new Thread(sThread);
         newThread.start();
         newThread.join();
@@ -42,7 +42,7 @@ class MainTest {
     @Test
     void TestSortingDescendingDigits() throws InterruptedException {
         List<Integer> list = Arrays.asList(10, 100, 2300, 2);
-        SortingThread sThread = new SortingThread(list, new SortByDescendingDigits());
+        SortingThread sThread = new SortingThread(list, (n1,n2)->Main.getNumberOfDigits(n2)-Main.getNumberOfDigits(n1));
         Thread newThread = new Thread(sThread);
         newThread.start();
         newThread.join();
