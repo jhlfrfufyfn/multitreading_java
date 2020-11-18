@@ -79,11 +79,11 @@ class SortingThread implements Runnable {
     private Comparator<Integer> comparator;
     private boolean isSorted = false;
 
-    List<Integer> getArray() {
+    public List<Integer> getArray() {
         return array;
     }
 
-    SortingThread(List<Integer> array, Comparator<Integer> comparator) {
+    public SortingThread(List<Integer> array, Comparator<Integer> comparator) {
         this.array = array;
         this.comparator = comparator;
         this.isSorted = true;
